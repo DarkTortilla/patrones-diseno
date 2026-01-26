@@ -13,7 +13,7 @@
  *
  */
 
-import { COLORS } from '../helpers/colors.ts';
+import { COLORS } from "../helpers/colors.ts";
 
 interface Hamburger {
   prepare(): void;
@@ -21,32 +21,29 @@ interface Hamburger {
 
 class ChickenHamburger implements Hamburger {
   prepare(): void {
-    console.log('Preparando una hamburguesa de %cpollo', COLORS.yellow);
+    console.log("Preparando hamburguesa de pollo", COLORS.yellow);
   }
 }
 
 class BeefHamburger implements Hamburger {
   prepare(): void {
-    console.log('Preparando una hamburguesa de %cres', COLORS.brown);
+    console.log("Preparando hamburguesa de Res", COLORS.red);
   }
 }
-
-class BeanHamburger implements Hamburger {
+class BeanHamburger implements Hamburger{
   prepare(): void {
-    console.log('Preparando una hamburguesa de %cfrijol', COLORS.orange);
+    console.log("Preparando Hamburgesa de frijol ", COLORS.blue)
   }
 }
-
 abstract class Restaurant {
-  protected abstract createHamburger(): Hamburger;
-
+  abstract createHamburger(): Hamburger;
   orderHamburger(): void {
     const hamburger = this.createHamburger();
     hamburger.prepare();
   }
 }
 
-class ChickenRestaurant extends Restaurant {
+class ChickenRestsurant extends Restaurant {
   override createHamburger(): Hamburger {
     return new ChickenHamburger();
   }
@@ -57,37 +54,28 @@ class BeefRestaurant extends Restaurant {
     return new BeefHamburger();
   }
 }
-
 class BeanRestaurant extends Restaurant {
   override createHamburger(): Hamburger {
     return new BeanHamburger();
   }
 }
-
 function main() {
   let restaurant: Restaurant;
-
-  const burgerType = prompt(
-    '¿Qué tipo de hamburguesa quieres? ( chicken/beef/bean )'
-  );
+  const burgerType = prompt("chicken/beef/bean");
 
   switch (burgerType) {
-    case 'chicken':
-      restaurant = new ChickenRestaurant();
+    case "chicken":
+      restaurant = new ChickenRestsurant();
       break;
-
-    case 'beef':
+    case "beef":
       restaurant = new BeefRestaurant();
       break;
-
-    case 'bean':
+    case "bean":
       restaurant = new BeanRestaurant();
       break;
-
     default:
-      throw new Error('Opción no válida');
+      throw new Error("Finux");
   }
-
   restaurant.orderHamburger();
 }
 
