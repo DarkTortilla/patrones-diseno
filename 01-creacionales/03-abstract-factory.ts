@@ -40,7 +40,7 @@ class BeefHamburger implements Hamburger {
   }
 }
 
-class Watter implements Drink {
+class Water implements Drink {
   pour(): void {
     console.log('Sirviendo vaso de agua', COLORS.blue);
   }
@@ -53,5 +53,26 @@ class Soda implements Drink {
 }
 
 interface RestaurantFactory {
-  createHamburger
+  createHumburger():Hamburger;
+  createDrink():Drink
+}
+
+class FastFooRestaurantFactory implements RestaurantFactory {
+  createHumburger(): Hamburger {
+    return new BeefHamburger()
+  }
+  createDrink(): Drink {
+    return new Soda();
+  }
+
+}
+
+class healthyFooRestaurantFactory implements RestaurantFactory {
+  createHumburger(): Hamburger {
+    return new ChikenHamburger();
+  }
+  createDrink(): Drink {
+    return new Water();
+  }
+
 }
