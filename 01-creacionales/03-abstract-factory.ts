@@ -67,7 +67,7 @@ class FastFooRestaurantFactory implements RestaurantFactory {
 
 }
 
-class healthyFooRestaurantFactory implements RestaurantFactory {
+class HealthyFooRestaurantFactory implements RestaurantFactory {
   createHumburger(): Hamburger {
     return new ChikenHamburger();
   }
@@ -76,3 +76,12 @@ class healthyFooRestaurantFactory implements RestaurantFactory {
   }
 
 }
+
+function main(factory: RestaurantFactory){
+  const hamburger = factory.createHumburger();
+  const drink = factory.createDrink();
+
+  hamburger.prepare();
+  drink.pour();
+}
+main(new HealthyFooRestaurantFactory())
