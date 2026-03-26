@@ -6,6 +6,7 @@
  *  * Es útil para mantener un historial de estados en aplicaciones interactivas.
  */
 
+import { mainModule } from "node:process";
 import { COLORS } from "../helpers/colors.ts";
 
 class CodeEditorState {
@@ -30,6 +31,9 @@ class CodeEditorState {
       `,
     );
   }
+  copyWith({content,cursorPosition, unsavedChanges}:Partial<CodeEditorState>):CodeEditorState{
+    return new CodeEditorState(content ?? this.content, cursorPosition?? this.cursorPosition, unsavedChanges ?? this.unsavedChanges);
+  }
 }
 
 class CodeEditorHistory  {
@@ -46,6 +50,14 @@ class CodeEditorHistory  {
     this.currentIndex ++;
   }
 
+  undo(): CodeEditorState | null {
+    if(this.currentIndex>0){
+      this.currentIndex --;
+      return this.history[this.currentIndex];
+    }
+    return null
+  }
+
   redo(): CodeEditorState | null{
     if(this.currentIndex < this.history.length-1){
       this.currentIndex ++;
@@ -54,3 +66,27 @@ class CodeEditorHistory  {
     return null;
   }
 }
+
+function main(){
+  console.log("estado inicial")
+  const history = new CodeEditorHistory();
+  let editorState = new CodeEditorState("console.log('Hola finux')", 2, false);
+  history.save(editorState);
+  editorState.displaySate();
+  
+  console.log("camabiar contenido")
+  editorState = editorState.copyWith({content:"console.log('Hola guapo')", cursorPosition: 2, unsavedChanges: true});
+  history.save(editorState);
+  editorState.displaySate()
+
+  console.log("cambiar cursor");
+  editorState = editorState.copyWith({cursorPosition:5});
+  history.save(editorState);
+
+  console.log("undo");
+  editorState = history.undo() ?? editorState;
+  editorState.displaySate(); 
+
+
+}
+main();
